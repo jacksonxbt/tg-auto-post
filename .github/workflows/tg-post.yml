@@ -1,6 +1,10 @@
 name: Telegram Auto Post
 
 on:
+  schedule:
+    - cron: '0 2 * * *'
+    - cron: '0 8 * * *'
+    - cron: '0 14 * * *'
   workflow_dispatch:
 
 jobs:
@@ -9,4 +13,42 @@ jobs:
 
     steps:
       - name: Send Telegram Message
-        run: curl -s -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" -d chat_id="${{ secrets.CHAT_ID }}" --data-urlencode text="Test message from BTC_Chopsticks Auto Bot 🚀"
+        run: |
+          MESSAGE="Community Note 👋
+
+If you haven’t registered an exchange account yet, you can use my referral links below to get started.
+
+I mainly use these platforms myself for spot trading, grid bots, and long-term positioning — no gimmicks, no leverage gambling.
+
+Using the referral helps support the community and allows me to keep sharing:
+• Market insights
+• On-chain data
+• Risk-aware strategies
+
+🔗 Recommended Platforms
+
+Binance TH
+https://accounts.binance.th/th/register?ref=BTCCSxBNTH1
+
+Bitget
+https://partner.bitget.com/bg/56GKTB
+
+Bybit
+https://partner.bybit.com/b/115799
+
+MEXC
+https://www.mexc.com/acquisition/custom-sign-up?shareCode=mexc-1N9Xt
+
+No pressure — use them only if they fit your needs.
+
+As always:
+• No leverage
+• No futures
+• Focus on survival first, profit second
+
+Let’s grow together 🤝
+— BTC_Chopsticks"
+
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
+          -d chat_id="${{ secrets.CHAT_ID }}" \
+          --data-urlencode text="$MESSAGE"
